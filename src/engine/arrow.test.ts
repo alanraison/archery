@@ -14,7 +14,7 @@ describe('Arrow', () => {
     const angleZ = 0;
     let getPosition: (time: number) => Coords;
     beforeEach(() => {
-      getPosition = a.fire(t0, force, height, angleY, angleZ);
+      getPosition = a.fire(t0, force, height, { angleY, angleZ });
     });
     it('should move forwards and accelerate downwards', () => {
       const dt = 0.1;
@@ -34,7 +34,7 @@ describe('Arrow', () => {
     const angleY = Math.PI / 6;
     const angleZ = 0;
     beforeEach(() => {
-      getPosition = a.fire(t0, force, height, angleY, angleZ);
+      getPosition = a.fire(t0, force, height, { angleY, angleZ });
     });
     it('should travel further when the initial angle is upwards', () => {
       const dt = (Math.sin(angleY) * force) / 9.8; // around the top of the trajectory
@@ -48,7 +48,7 @@ describe('Arrow', () => {
     const angleY = Math.PI / 6;
     const angleZ = Math.PI / 36;
     beforeEach(() => {
-      getPosition = a.fire(t0, force, height, angleY, angleZ);
+      getPosition = a.fire(t0, force, height, { angleY, angleZ });
     });
     it('should land to the side', () => {
       const dt = Math.sqrt((height + Math.sin(angleY) * force) / 4.9) * 1000;

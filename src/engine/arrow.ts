@@ -1,4 +1,5 @@
 import { Coords } from "./coords";
+import { Angles } from "./positioner";
 
 export class Arrow {
   constructor(readonly mass: number) {
@@ -12,7 +13,7 @@ export class Arrow {
    * @param angleY the upwards angle of the arrow when fired
    * @param angleZ the sideways angle of the arrow when fired
    */
-  fire(time: number, force: number, height: number, angleY: number, angleZ: number) {
+  fire(time: number, force: number, height: number, { angleY, angleZ }: Angles) {
     const fireTime = time;
     const tMax = Math.sqrt((height + Math.sin(angleY) * force) / 4.9);
     const xMax = Math.cos(angleY) * force * tMax;

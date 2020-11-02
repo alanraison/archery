@@ -1,4 +1,5 @@
 import { Arrow } from './arrow';
+import { Positioner, PositionerFunc } from './positioner';
 import { Quiver } from './quiver';
 
 export class Bow {
@@ -6,8 +7,7 @@ export class Bow {
   private currentForce: number = 0;
   private lastEventTime: number = 0;
   private arrow?: Arrow;
-  private angleY: number = 0;
-  private angleZ: number = 0;
+  private positioners: Positioner = new Positioner();
 
   /**
    * A Bow, to fire arrows.
@@ -46,12 +46,12 @@ export class Bow {
     return this.currentForce;
   }
 
-  tiltY(time: number, angleY: number) {
-    this.angleY = angleY;
+  addYPositioner(p: PositionerFunc) {
+    this.positioners.addYPositionerFunc(p);
   }
 
-  tiltZ(time: number, angleZ: number) {
-    this.angleZ = angleZ;
+  addZPositioner(p: PositionerFunc) {
+    this.positioners.addZPositionerFunc(p);
   }
 
   fire(time: number): Arrow | undefined {
@@ -59,7 +59,7 @@ export class Bow {
     this.currentForce = 0;
     this.lastEventTime = 0;
     if (this.arrow) {
-      this.arrow.fire(time, currentTension, Bow.height, this.angleY, this.angleZ);
+      this.arrow.fire(time, currentTension, Bow.height, this.positioners.getAngles(time));
     }
     return this.arrow;
   }
